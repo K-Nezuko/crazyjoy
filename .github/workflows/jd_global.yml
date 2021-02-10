@@ -1,16 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: jd_global_环球挑战赛 活动时间：2021-02-02 至 2021-02-22
+name: jd_global
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1,4,12-13 * * *'
-  watch:
-    types: [started]
+    - cron: '52 0,3,11,12 * * *'
   repository_dispatch:
-    types: global
+    types: jdglobal
 jobs:
   build:
 
@@ -20,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: vidocqh/jd_scripts
+          repository: Tersd07/st1
           ref: master
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -36,35 +34,23 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: run script
+      - name: '运行 【环球挑战赛脚本】'
         run: |
-          python3 sorryLXK.py
-      - name: '运行 【环球挑战赛 活动时间：2021-02-02 至 2021-02-22】'
-        run: |
+          sed -ri -e "s/const inviteCodes =/& ['Q0M2S3hZVmlKUEJ3bTd1Zy8wZG5TZz09'];/g"\
+            -e "s/const randomCount =/&3;/g" jd_global.js
           node jd_global.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_USER_AGENT: ${{ secrets.JD_USER_AGENT }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          QQ_SKEY: ${{ secrets.QQ_SKEY }}
+          QQ_MODE: ${{ secrets.QQ_MODE }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          PETSHARECODES: ${{ secrets.PETSHARECODES }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          DREAM_FACTORY_SHARE_CODES: ${{ secrets.DREAM_FACTORY_SHARE_CODES }}
-          JDJOY_SHARECODES: ${{ secrets.JDJOY_SHARECODES }}
-          FRUITSHARECODES: ${{ secrets.FRUITSHARECODES }}
-          PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES }}
-          SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES }}
-          DDFACTORY_SHARECODES: ${{ secrets.DDFACTORY_SHARECODES }}
-          JDZZ_SHARECODES: ${{ secrets.JDZZ_SHARECODES }}
-          BOOKSHOP_SHARECODES: ${{ secrets.BOOKSHOP_SHARECODES }}
-          JD_CASH_SHARECODES: ${{ secrets.JD_CASH_SHARECODES }}
-          JXNC_SHARECODES: ${{ secrets.JXNC_SHARECODES }}
-          JDSGMH_SHARECODES: ${{ secrets.JDSGMH_SHARECODES }}
-          JDNIAN_SHARECODES: ${{ secrets.JDNIAN_SHARECODES }}
-          JDSXSY_SHARECODES: ${{ secrets.JDSXSY_SHARECODES }}
+          JDGLOBAL_SHARECODES: ${{ secrets.JDGLOBAL_SHARECODES }}
